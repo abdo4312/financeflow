@@ -29,7 +29,7 @@ import budgetRoutes from './routes/budget.routes.js';
 dotenv.config();
 
 // Initialize Database Connection
-// Triggering deployment to Google Cloud Run
+// Triggering deployment with updated IAM permissions
 connectDB().then(() => {
   logger.info('MongoDB Connected Successfully');
   // Seed initial data like default transaction categories
