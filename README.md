@@ -83,7 +83,7 @@
 #### Installation
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/financeflow.git
+   git clone https://github.com/abdo4312/financeflow.git
    ```
 
 2. **Backend Setup:**
@@ -112,5 +112,10 @@ This project is licensed under the MIT License.
 
 ---
 
+### 👨‍💻 تم التطوير بواسطة
+**Abdelrhman Khaled** - [GitHub Profile](https://github.com/abdo4312)
+
+---
+
 ### 👨‍💻 Developed by
-**Full Stack Developer** - [Your Name/GitHub Profile]
+**Abdelrhman Khaled** - [GitHub Profile](https://github.com/abdo4312)
