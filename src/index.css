@@ -1,0 +1,79 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans dark:bg-slate-950 dark:text-slate-100;
+  }
+
+  /* Arabic font support */
+  html[lang="ar"] body,
+  html[lang="ar"] * {
+    font-family: 'Cairo', system-ui, sans-serif;
+  }
+
+  /* RTL support */
+  html[dir="rtl"] {
+    direction: rtl;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2;
+  }
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600;
+  }
+  .btn-secondary {
+    @apply bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700 dark:hover:bg-slate-700;
+  }
+  .btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600;
+  }
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-slate-100 p-6 dark:bg-slate-900 dark:border-slate-800;
+  }
+  .input-field {
+    @apply w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-800 dark:border-slate-700 dark:text-white;
+  }
+  .label {
+    @apply block text-sm font-medium text-slate-700 mb-1 dark:text-slate-300;
+  }
+}
+
+/* RTL-specific styles */
+@layer utilities {
+  /* Dark mode support for RTL */
+  html[dir="rtl"] .dark .card {
+    @apply dark:bg-slate-900;
+  }
+
+  /* Input fields RTL */
+  html[dir="rtl"] .input-field {
+    text-align: right;
+  }
+
+  /* Number inputs should stay LTR */
+  html[dir="rtl"] input[type="number"],
+  html[dir="rtl"] input[type="date"] {
+    direction: ltr;
+    text-align: left;
+  }
+
+  /* RTL adjustments for charts - keep them LTR for better readability */
+  html[dir="rtl"] .recharts-wrapper {
+    direction: ltr;
+  }
+
+  /* RTL sidebar border adjustment */
+  html[dir="rtl"] .sidebar {
+    border-right: none;
+    border-left: 1px solid rgb(226 232 240);
+  }
+
+  html[dir="rtl"] .dark .sidebar {
+    border-left-color: rgb(51 65 85);
+  }
+}
