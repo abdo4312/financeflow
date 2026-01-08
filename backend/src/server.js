@@ -108,18 +108,22 @@ app.get('/api/v1/health', (req, res) => {
  */
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+// Export app for Vercel Serverless Functions
+export default app;
 
-// Start Server
-const server = app.listen(PORT, () => {
-  logger.info(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
-});
+// Start Server (Only in non-Vercel environment)
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    logger.info(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+  });
+}
 
 /**
  * Process-wide Error Handling
  */
-process.on('unhandledRejection', (err, promise) => {
-  logger.error(`Unhandled Rejection Error: ${err.message}`);
-  // Gracefully close server & exit process on critical errors
-  server.close(() => process.exit(1));
-});
+if (process.env.NODE_ENV !== 'production') {
+  process.on('unhandledRejection', (err, promise) => {
+    logger.error(`Unhandled Rejection Error: ${err.message}`);
+  });
+}
