@@ -3,30 +3,40 @@
 هذا الدليل يشرح كيفية نشر التطبيق (الواجهة الأمامية والخلفية) على منصات استضافة مجانية.
 
 ## 1. نشر الواجهة الخلفية (Backend) على Render
-تعتبر منصة [Render](https://render.com/) خياراً ممتازاً لنشر تطبيقات Node.js مجاناً.
+(الخطوات السابقة...)
 
-### الخطوات:
-1. قم بإنشاء حساب على Render واربطه بحساب GitHub الخاص بك.
-2. اختر **"New > Web Service"**.
-3. اختر مستودع المشروع الخاص بك.
-4. في الإعدادات:
-   - **Root Directory:** `backend`
-   - **Build Command:** `npm install`
-   - **Start Command:** `npm start` (تأكد من وجود script start في package.json)
-5. في قسم **Environment Variables**، أضف المتغيرات الموجودة في `.env.example`:
-   - `PORT`: 10000
-   - `MONGODB_URI`: (رابط قاعدة البيانات من MongoDB Atlas)
-   - `JWT_SECRET`: (سلسلة نصية عشوائية طويلة)
-   - `REFRESH_TOKEN_SECRET`: (سلسلة نصية عشوائية أخرى)
-   - `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`: (من حسابك في Cloudinary)
-   - `FRONTEND_URL`: (رابط الواجهة الأمامية بعد نشرها - يمكنك تحديثه لاحقاً)
+## 2. نشر الواجهة الخلفية (Backend) على Google Cloud Run
+يعتبر Google Cloud Run خياراً قوياً جداً ومجانياً للاستخدامات البسيطة.
 
-## 2. نشر قاعدة البيانات على MongoDB Atlas
-1. أنشئ حساباً مجانياً على [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
-2. أنشئ "Cluster" جديد (Shared/Free).
-3. أضف مستخدماً لقاعدة البيانات واحفظ كلمة المرور.
-4. في "Network Access"، أضف `0.0.0.0/0` للسماح بالاتصال من أي مكان.
-5. احصل على "Connection String" وضعه في متغير `MONGODB_URI` في Render.
+### المتطلبات:
+1. حساب على [Google Cloud Platform](https://console.cloud.google.com/).
+2. تثبيت [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) على جهازك (اختياري، يمكن استخدام Cloud Shell).
+
+### الخطوات (باستخدام Cloud Shell):
+1. ارفع الكود إلى GitHub (لقد قمنا بذلك بالفعل).
+2. افتح **Cloud Shell** في Google Cloud Console.
+3. قم بعمل `git clone` للمستودع الخاص بك.
+4. ادخل إلى مجلد الباك اند: `cd financeflow/backend`.
+5. قم بتشغيل الأمر التالي لبناء الصورة ونشرها:
+   ```bash
+   gcloud run deploy finance-backend --source . --region us-central1 --allow-unauthenticated
+   ```
+6. سيطلب منك النظام تحديد بعض الإعدادات، اختر الإعدادات الافتراضية.
+7. بعد الانتهاء، سيعطيك رابطاً (URL) للواجهة الخلفية.
+
+### إضافة متغيرات البيئة (Environment Variables):
+بعد النشر، اذهب إلى صفحة الخدمة في Google Cloud Run:
+1. اختر **"Edit & Deploy New Revision"**.
+2. اذهب إلى تبويب **"Variables & Secrets"**.
+3. أضف المتغيرات التالية (نفس المتغيرات التي ذكرناها في Render):
+   - `MONGODB_URI`
+   - `JWT_SECRET`
+   - `REFRESH_TOKEN_SECRET`
+   - `CLOUDINARY_...`
+   - `PORT`: 8080 (Cloud Run يستخدم 8080 افتراضياً).
+
+## 3. نشر قاعدة البيانات على MongoDB Atlas
+(نفس الخطوات السابقة...)
 
 ## 3. نشر الواجهة الأمامية (Frontend) على Vercel
 تعتبر [Vercel](https://vercel.com/) الأفضل لتطبيقات React/Vite.
